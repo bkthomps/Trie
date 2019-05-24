@@ -7,6 +7,7 @@ public final class TestTrie {
     public static void main(String[] args) {
         testMutation();
         testEquals();
+        testCopyConstructor();
     }
 
     private static void testMutation() {
@@ -63,6 +64,25 @@ public final class TestTrie {
         one.trim();
         int newHash = one.hashCode();
         assertTrue(oldHash == newHash);
+    }
+
+    private static void testCopyConstructor() {
+        Trie one = new Trie();
+        one.add("hello");
+        Trie two = new Trie(one);
+        assertTrue(one.size() == 1);
+        assertTrue(two.size() == 1);
+        assertTrue(one.contains("hello"));
+        assertTrue(two.contains("hello"));
+        assertTrue(one.equals(two));
+        assertTrue(one.hashCode() == two.hashCode());
+        two.add("world");
+        assertTrue(!one.contains("world"));
+        assertTrue(two.contains("world"));
+        assertTrue(one.size() == 1);
+        assertTrue(two.size() == 2);
+        assertTrue(!one.equals(two));
+        assertTrue(one.hashCode() != two.hashCode());
     }
 
     private static void assertTrue(boolean truth) {

@@ -24,13 +24,26 @@ package com.bkthomps.trie;
 public final class Trie {
 
     private static final int LETTERS_IN_ENGLISH = 26;
-    private Node root = new Node();
+    private Node root;
     private int size;
 
     private final class Node {
 
         private boolean isWord;
         private final Node[] letters = new Node[LETTERS_IN_ENGLISH];
+
+        private Node() {
+            // Default constructor
+        }
+
+        private Node(Node node) {
+            isWord = node.isWord;
+            for (int i = 0; i < letters.length; i++) {
+                if (node.letters[i] != null) {
+                    letters[i] = new Node(node.letters[i]);
+                }
+            }
+        }
 
         private boolean add(char[] word, int index) {
             if (word.length - 1 == index) {
@@ -131,6 +144,15 @@ public final class Trie {
                 }
             }
         }
+    }
+
+    public Trie() {
+        root = new Node();
+    }
+
+    public Trie(Trie trie) {
+        root = new Node(trie.root);
+        size = trie.size;
     }
 
     private char[] checkWord(String word) {
