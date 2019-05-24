@@ -25,22 +25,24 @@ public final class Trie {
 
     private static final int LETTERS_IN_ENGLISH = 26;
     private final Node root = new Node();
+    private int size;
 
     private final class Node {
 
         private boolean isWord;
         private final Node[] letters = new Node[LETTERS_IN_ENGLISH];
 
-        private void add(char[] word, int index) {
+        private boolean add(char[] word, int index) {
             if (word.length - 1 == index) {
+                boolean wasWord = isWord;
                 isWord = true;
-                return;
+                return !wasWord;
             }
             var lettersIndex = word[index] - 'a';
             if (letters[lettersIndex] == null) {
                 letters[lettersIndex] = new Node();
             }
-            letters[lettersIndex].add(word, index + 1);
+            return letters[lettersIndex].add(word, index + 1);
         }
 
         private boolean contains(char[] word, int index) {
@@ -83,7 +85,10 @@ public final class Trie {
             return;
         }
         var arr = checkWord(word);
-        root.add(arr, 0);
+        boolean added = root.add(arr, 0);
+        if (added) {
+            size++;
+        }
     }
 
     public boolean contains(String word) {
@@ -99,6 +104,18 @@ public final class Trie {
             return true;
         }
         var arr = checkWord(word);
-        return root.remove(arr, 0);
+        boolean removed = root.remove(arr, 0);
+        if (removed) {
+            size--;
+        }
+        return removed;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
     }
 }
