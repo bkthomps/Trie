@@ -119,6 +119,18 @@ public final class Trie {
             }
             return hash;
         }
+
+        private void trim() {
+            for (int i = 0; i < letters.length; i++) {
+                if (letters[i] != null) {
+                    if (letters[i].isNoWords()) {
+                        letters[i] = null;
+                    } else {
+                        letters[i].trim();
+                    }
+                }
+            }
+        }
     }
 
     private char[] checkWord(String word) {
@@ -173,6 +185,10 @@ public final class Trie {
     public void clear() {
         root = new Node();
         size = 0;
+    }
+
+    public void trim() {
+        root.trim();
     }
 
     @Override

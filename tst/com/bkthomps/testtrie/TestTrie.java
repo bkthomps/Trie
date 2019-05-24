@@ -59,6 +59,10 @@ public final class TestTrie {
         two.remove("hi");
         assertTrue(one.equals(two));
         assertTrue(one.hashCode() == two.hashCode());
+        int oldHash = one.hashCode();
+        one.trim();
+        int newHash = one.hashCode();
+        assertTrue(oldHash == newHash);
     }
 
     private static void assertTrue(boolean truth) {
