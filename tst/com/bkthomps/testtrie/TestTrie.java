@@ -40,18 +40,25 @@ public final class TestTrie {
         var one = new Trie();
         var two = new Trie();
         assertTrue(one.equals(two));
+        assertTrue(one.hashCode() == two.hashCode());
         one.add("hi");
         assertTrue(!one.equals(two));
+        assertTrue(one.hashCode() != two.hashCode());
         two.add("hi");
         assertTrue(one.equals(two));
+        assertTrue(one.hashCode() == two.hashCode());
         one.add("hiy");
         assertTrue(!one.equals(two));
+        assertTrue(one.hashCode() != two.hashCode());
         one.remove("hiy");
         assertTrue(one.equals(two));
+        assertTrue(one.hashCode() == two.hashCode());
         one.remove("hi");
         assertTrue(!one.equals(two));
+        assertTrue(one.hashCode() != two.hashCode());
         two.remove("hi");
         assertTrue(one.equals(two));
+        assertTrue(one.hashCode() == two.hashCode());
     }
 
     private static void assertTrue(boolean truth) {

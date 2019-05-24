@@ -81,8 +81,7 @@ public final class Trie {
             return true;
         }
 
-        // This does not override equals, it overloads it
-        private boolean equals(Node node) {
+        private boolean isEqual(Node node) {
             if (node == null) {
                 return isNoWords();
             }
@@ -96,16 +95,29 @@ public final class Trie {
                     continue;
                 }
                 if (one == null) {
-                    if (!two.equals(null)) {
+                    if (!two.isEqual(null)) {
                         return false;
                     }
                     continue;
                 }
-                if (!one.equals(two)) {
+                if (!one.isEqual(two)) {
                     return false;
                 }
             }
             return true;
+        }
+
+        private int computeHash(int num) {
+            int hash = 17;
+            if (isWord) {
+                hash = 31 * hash + num;
+            }
+            for (int i = 0; i < letters.length; i++) {
+                if (letters[i] != null && !letters[i].isNoWords()) {
+                    hash = 31 * hash + letters[i].computeHash(i + 1);
+                }
+            }
+            return hash;
         }
     }
 
@@ -172,6 +184,11 @@ public final class Trie {
             return false;
         }
         Trie that = (Trie) obj;
-        return root.equals(that.root);
+        return root.isEqual(that.root);
+    }
+
+    @Override
+    public int hashCode() {
+        return root.computeHash(0);
     }
 }
