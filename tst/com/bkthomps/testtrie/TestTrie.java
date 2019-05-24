@@ -26,6 +26,9 @@ public final class TestTrie {
         assertTrue(trie.size() == 1);
         assertTrue(!trie.contains("hello"));
         assertTrue(trie.contains("helloworld"));
+        trie.clear();
+        assertTrue(!trie.contains("helloworld"));
+        assertTrue(trie.isEmpty());
     }
 
     private static void assertTrue(boolean truth) {

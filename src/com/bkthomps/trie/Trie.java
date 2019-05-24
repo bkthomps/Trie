@@ -24,7 +24,7 @@ package com.bkthomps.trie;
 public final class Trie {
 
     private static final int LETTERS_IN_ENGLISH = 26;
-    private final Node root = new Node();
+    private Node root = new Node();
     private int size;
 
     private final class Node {
@@ -117,5 +117,10 @@ public final class Trie {
 
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    public void clear() {
+        root = new Node();
+        size = 0;
     }
 }
