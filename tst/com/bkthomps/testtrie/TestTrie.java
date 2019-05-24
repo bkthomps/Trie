@@ -2,7 +2,7 @@ package com.bkthomps.testtrie;
 
 import com.bkthomps.trie.Trie;
 
-public class TestTrie {
+public final class TestTrie {
 
     public static void main(String[] args) {
         var trie = new Trie();
