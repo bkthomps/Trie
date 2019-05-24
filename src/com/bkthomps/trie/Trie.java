@@ -53,6 +53,19 @@ public final class Trie {
             }
             return letters[lettersIndex].contains(word, index + 1);
         }
+
+        private boolean remove(char[] word, int index) {
+            if (word.length - 1 == index) {
+                boolean wasWord = isWord;
+                isWord = false;
+                return wasWord;
+            }
+            var lettersIndex = word[index] - 'a';
+            if (letters[lettersIndex] == null) {
+                return false;
+            }
+            return letters[lettersIndex].remove(word, index + 1);
+        }
     }
 
     private char[] checkWord(String word) {
@@ -79,5 +92,13 @@ public final class Trie {
         }
         var arr = checkWord(word);
         return root.contains(arr, 0);
+    }
+
+    public boolean remove(String word) {
+        if (word.length() == 0) {
+            return true;
+        }
+        var arr = checkWord(word);
+        return root.remove(arr, 0);
     }
 }

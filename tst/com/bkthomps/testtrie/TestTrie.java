@@ -15,6 +15,10 @@ public final class TestTrie {
         assertTrue(trie.contains("hello"));
         assertTrue(!trie.contains("hellow"));
         assertTrue(trie.contains("helloworld"));
+        assertTrue(!trie.remove("hellow"));
+        assertTrue(trie.remove("hello"));
+        assertTrue(!trie.contains("hello"));
+        assertTrue(trie.contains("helloworld"));
     }
 
     private static void assertTrue(boolean truth) {
