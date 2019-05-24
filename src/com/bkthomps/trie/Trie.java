@@ -68,6 +68,45 @@ public final class Trie {
             }
             return letters[lettersIndex].remove(word, index + 1);
         }
+
+        private boolean isNoWords() {
+            if (isWord) {
+                return false;
+            }
+            for (var letter : letters) {
+                if (letter != null && !letter.isNoWords()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // This does not override equals, it overloads it
+        private boolean equals(Node node) {
+            if (node == null) {
+                return isNoWords();
+            }
+            if (isWord != node.isWord) {
+                return false;
+            }
+            for (int i = 0; i < letters.length; i++) {
+                var one = letters[i];
+                var two = node.letters[i];
+                if (one == null && two == null) {
+                    continue;
+                }
+                if (one == null) {
+                    if (!two.equals(null)) {
+                        return false;
+                    }
+                    continue;
+                }
+                if (!one.equals(two)) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     private char[] checkWord(String word) {
@@ -122,5 +161,17 @@ public final class Trie {
     public void clear() {
         root = new Node();
         size = 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Trie)) {
+            return false;
+        }
+        Trie that = (Trie) obj;
+        return root.equals(that.root);
     }
 }

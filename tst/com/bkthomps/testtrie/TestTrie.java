@@ -5,6 +5,11 @@ import com.bkthomps.trie.Trie;
 public final class TestTrie {
 
     public static void main(String[] args) {
+        testMutation();
+        testEquals();
+    }
+
+    private static void testMutation() {
         var trie = new Trie();
         assertTrue(trie.isEmpty());
         assertTrue(trie.size() == 0);
@@ -29,6 +34,24 @@ public final class TestTrie {
         trie.clear();
         assertTrue(!trie.contains("helloworld"));
         assertTrue(trie.isEmpty());
+    }
+
+    private static void testEquals() {
+        var one = new Trie();
+        var two = new Trie();
+        assertTrue(one.equals(two));
+        one.add("hi");
+        assertTrue(!one.equals(two));
+        two.add("hi");
+        assertTrue(one.equals(two));
+        one.add("hiy");
+        assertTrue(!one.equals(two));
+        one.remove("hiy");
+        assertTrue(one.equals(two));
+        one.remove("hi");
+        assertTrue(!one.equals(two));
+        two.remove("hi");
+        assertTrue(one.equals(two));
     }
 
     private static void assertTrue(boolean truth) {
